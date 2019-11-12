@@ -30,7 +30,7 @@ const Form = () => {
         setTitle(e.target.value);
     }, []);
 
-    const onSubmit = e => {
+    const onSubmit = useCallback(e => {
         e.preventDefault();
         // console.log({name, title});
         if( mode === "create" ){
@@ -40,7 +40,7 @@ const Form = () => {
         }
         setName("");
         setTitle("");
-    };
+    }, [name, title]);
 
     return (
         <>

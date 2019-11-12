@@ -16,7 +16,7 @@ const List = () => {
 
     return (
         <div>
-            {console.log(data)}
+            {/*{console.log(data)}*/}
             <ul>
                 {data.map(item =>
                     <li key={item.id}><Button active={item.id === current} onClick={() => updateCurrent(item.id)}>{item.name}</Button></li>
