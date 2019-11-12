@@ -1,4 +1,4 @@
-import React, {useState, useContext, useCallback} from 'react';
+import React, {useState, useContext, useCallback, useMemo} from 'react';
 
 const AppContext = React.createContext();
 
@@ -51,15 +51,22 @@ const AppContextProvider = ({children}) => {
             item
         ));
         setState({...state, mode: "read"});
-    }, [state]);
+    }, [state.current]);
 
     const onDelete = useCallback(id => {
         setData(data.filter(item => item.id !== id));
         setState({...state, mode: "welcome"});
     }, [data]);
 
+    // context 최적화를 위해 useMemo 를 사용해준다. (캐싱필요)
+    // 리랜더링 될 때마다 provider 내부애들을 재생성하기때문
+    // https://www.youtube.com/watch?v=tRSsb7wz994&list=PLcqDmjxt30RtqbStQqk-eYMK8N-1SYIFn&index=57 3:33 부터
+    const value = useMemo(() =>({
+        state, data, fn :{updateCurrent, updateMode, onCreate, onUpdate, onDelete }
+    }), [state, data]);
+
     return(
-        <AppContext.Provider value={{ state, data, fn :{updateCurrent, updateMode, onCreate, onUpdate, onDelete }}}>
+        <AppContext.Provider value={value}>
             {children}
         </AppContext.Provider>
     )
