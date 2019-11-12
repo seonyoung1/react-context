@@ -18,14 +18,17 @@ const Controls = () => {
 
     return (
         <>
-            {mode === "read" &&
-                <Box>
+            <Box>
+                {(mode === "read" || mode === "welcome") &&
                     <button onClick={() => updateMode("create")}>추가</button>
-                    <button onClick={() => updateMode("update")}>수정</button>
-                    <button onClick={handleDelete}>삭제</button>
-                </Box>
-            }
-
+                }
+                {mode === "read" &&
+                    <>
+                        <button onClick={() => updateMode("update")}>수정</button>
+                        <button onClick={handleDelete}>삭제</button>
+                    </>
+                }
+            </Box>
         </>
     );
 };

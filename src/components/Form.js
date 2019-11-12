@@ -24,20 +24,22 @@ const Form = () => {
 
     const onChangeName = useCallback(e => {
         setName(e.target.value);
-    }, [name]);
+    }, []);
 
     const onChangeTitle = useCallback(e => {
         setTitle(e.target.value);
-    }, [title]);
+    }, []);
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log({name, title});
+        // console.log({name, title});
         if( mode === "create" ){
             onCreate({name, title});
         }else if( mode === "update" ){
             onUpdate({name, title})
         }
+        setName("");
+        setTitle("");
     };
 
     return (

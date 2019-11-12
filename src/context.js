@@ -1,14 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 
 const AppContext = React.createContext();
 
+let last = 3;
 const AppContextProvider = ({children}) => {
-    let lastId = 3;
     const [state, setState] = useState({
         current: null,
         mode: "welcome",
         welcome: "안녕하세요!!"
-
     });
     const [data, setData] = useState([
         {
@@ -28,33 +27,36 @@ const AppContextProvider = ({children}) => {
         }
     ]);
 
-    const updateCurrent = number => setState({ ...state, current: number, mode: "read" });
-    const updateMode = text => setState({ ...state, mode: text });
+    const updateCurrent = useCallback(number => {
+        setState({ ...state, current: number, mode: "read" })
+    }, []);
 
-    const onCreate = content => {
+    const updateMode = useCallback(text => {
+        setState({ ...state, mode: text })
+    }, [state]);
+
+    const onCreate = useCallback(content => {
         setData([
-            ...data, {id: lastId++, ...content}
+            ...data, {id: last , ...content}
         ]);
         setState({
-            ...state,
-            mode: "read",
-            current: Number(lastId - 1),
+            ...state, mode: "read", current: last
         });
-    };
+        last = last + 1;
+    }, [data]);
 
-    const onUpdate = content => {
+    const onUpdate = useCallback(content => {
         setData(data.map(item => item.id === state.current ?
             {...item, ...content} :
             item
         ));
         setState({...state, mode: "read"});
-    };
+    }, [state]);
 
-    const onDelete = id => {
-        if( data.length <= 1 ) return alert("마지막 글은 지울 수 없습니다");
-        setData( data.filter(item => item.id !== id));
+    const onDelete = useCallback(id => {
+        setData(data.filter(item => item.id !== id));
         setState({...state, mode: "welcome"});
-    };
+    }, [data]);
 
     return(
         <AppContext.Provider value={{ state, data, fn :{updateCurrent, updateMode, onCreate, onUpdate, onDelete }}}>
