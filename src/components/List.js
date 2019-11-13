@@ -8,15 +8,12 @@ const Button = styled.button`
 `;
 
 const List = () => {
-    const data = useData();
-    const {current, welcome, mode} = useContent();
+    const {state: {current, welcome, mode}, data} = useContent();
     const {updateCurrent} = useFns();
-
     const content = data.filter(item => item.id === current)[0];
 
     return (
         <div>
-            {/*{console.log(data)}*/}
             <ul>
                 {data.map(item =>
                     <li key={item.id}><Button active={item.id === current} onClick={() => updateCurrent(item.id)}>{item.name}</Button></li>

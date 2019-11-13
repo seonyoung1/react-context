@@ -1,5 +1,5 @@
 import React from 'react';
-import {useContent, useData, useFns} from "../context";
+import {useContent, useFns} from "../context";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -9,7 +9,7 @@ const Box = styled.div`
 
 const Controls = () => {
     const {updateMode, onDelete} = useFns();
-    const {current, mode} = useContent();
+    const {state: {current, mode}} = useContent();
 
     const handleDelete = ()  => {
         onDelete(current);

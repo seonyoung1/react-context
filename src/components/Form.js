@@ -9,8 +9,7 @@ const Wrap = styled.div`
 `;
 
 const Form = () => {
-    const data = useData();
-    const {mode, current} = useContent();
+    const {state: {current, mode}, data} = useContent();
     const {updateMode, onCreate, onUpdate} = useFns();
     const [name, setName] = useState("");
     const [title, setTitle] = useState("");

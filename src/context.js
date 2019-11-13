@@ -75,13 +75,8 @@ const AppContextProvider = ({children}) => {
 // 위에 적용된 파일을 편하게 부르기 위해서 작성
 // 없다면 state 부를때마다 const {state} = useContext(AppContext); 매번 작성해줘야한다.
 export const useContent = () => {
-    const { state } = useContext(AppContext);
-    return state;
-};
-
-export const useData = () => {
-    const { data } = useContext(AppContext);
-    return data;
+    const { state, data } = useContext(AppContext);
+    return { state, data };
 };
 
 export const useFns = () => {
