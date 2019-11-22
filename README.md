@@ -1,7 +1,7 @@
 # React useContext Practice Page
 > useContext 를 사용해서 CRUD 적용해보기.
 >
-> [사이트보기](https://seonn-context.netlify.com/)
+> [사이트보기](https://seony-context.netlify.com/)
 
 ## 개발환경
 > create-react-app
